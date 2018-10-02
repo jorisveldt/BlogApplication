@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Signup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script> -->
+</head>
+<body>
+
+<a href="login">Sign in</a> <a href="signup">Signup</a> <a href="profile">Profile</a> <a href="createpost">Create Post</a> <a href="posts">Posts</a> <a href="allposts">All posts</a>
+
+  <h1>Welcome to your profile page </h1>
+
+  	<p>Name: <%= user.email %> </p>
+  	<p>Password: <%= user.password %> </p>
+
+<ul>
+  <li><a href="/createpost">Click here to create a new post</a></li>
+   <li><a href="/posts">View a list of your own posts</a></li>
+   <li><a href="/allposts">View a list of everyone's posts</a></li>
+   <li><a href="/logout">Click here to log out</a></li>
+ </ul>
+
+</body>
+</html>
