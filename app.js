@@ -137,6 +137,13 @@ app.post('/createpost', function(req, res) {
 
 //GET OWN POSTS
 app.get('/posts', function(req, res) {
+
+	const user = req.session.user;
+
+	if( user === undefined) {
+		res.redirect('/?message=' + encodeURIComponent("Please log in as an user to add new post."));
+	} else {
+	
 	Post.findAll({
 		where: {
 			userId: req.session.user.id
@@ -145,13 +152,22 @@ app.get('/posts', function(req, res) {
 	.then(posts => {
 		res.render('posts', {posts: posts})
 	})
+	}
 })
 
 //GET ALL POSTS
 app.get('/allposts', function(req, res) {
+
+	const user = req.session.user;
+
+	if( user === undefined) {
+		res.redirect('/?message=' + encodeURIComponent("Please log in as an user to add new post."));
+	} else {
+
 	Post.findAll().then(posts => {
 		res.render('allposts', {posts: posts})
 	})
+	}
 })
 
 //LOG OUT FROM SESSION
