@@ -20,11 +20,14 @@ const Post = sequelize.define('posts', {
 	body: Sequelize.STRING
 });
 
-Post.belongsTo(User);
-
 const Comment = sequelize.define('comments', {
 	comment: Sequelize.STRING
 })
+
+Post.belongsTo(User);
+
+Post.hasMany(Comment);
+Comment.belongsTo(Post);
 
 const app = express();
 
@@ -170,12 +173,34 @@ app.get('/allposts', function(req, res) {
 	}
 })
 
-//SHOW A SPECIFIC POST
+//SHOW A SPECIFIC POST + SHOW ALL COMMENTS
 app.get('/allposts/:id', function (req, res) {
-	Post.findById(req.params.id).then((foundPost) => {
-			res.render('show', {foundPost: foundPost})
+	Post.findById(req.params.id)
+	.then((foundPost) => {
+		Comment.findAll({
+			where: {
+				postId: req.params.id
+			}
+		})
+		.then((findComment) => {
+			res.render('show', {foundPost: foundPost, findComment: findComment})
+		})
 	})
 })
+
+//ADD A COMMENT TO A SPECIFIC POST
+app.post('/allposts/:id', function (req, res) {
+		Comment.create({
+			comment: req.body.comment,
+			postId: req.params.id,
+		})
+		.then(() => {
+			res.redirect(`/allposts/${req.params.id}`)
+	})
+		.catch(error => {
+    		console.log('Error', err.stack)
+  })
+});		
 
 //LOG OUT FROM SESSION
 app.get('/logout', function (request, response) {
