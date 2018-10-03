@@ -170,6 +170,13 @@ app.get('/allposts', function(req, res) {
 	}
 })
 
+//SHOW A SPECIFIC POST
+app.get('/allposts/:id', function (req, res) {
+	Post.findById(req.params.id).then((foundPost) => {
+			res.render('show', {foundPost: foundPost})
+	})
+})
+
 //LOG OUT FROM SESSION
 app.get('/logout', function (request, response) {
 	request.session.destroy(function(error) {
