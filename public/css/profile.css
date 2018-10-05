@@ -56,3 +56,10 @@ body {
     margin-right: 12px;
     border-radius: 3px;
 }
+
+.footer-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}

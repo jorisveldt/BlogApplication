@@ -46,3 +46,10 @@ body {
 .form-row .col {
 	padding: none;
 }
+
+.footer-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
