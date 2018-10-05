@@ -45,7 +45,7 @@ app.set('views', './views');
 
 //GET HOME PAGE
 app.get('/', function(req, res) {
-  res.render('index')
+  res.render('signup')
 })
 
 //GET SIGN UP PAGE
@@ -79,6 +79,12 @@ app.get('/profile', function(req, res) {
 		
 	})
 // })
+
+app.get('/settings', function(req, res) {
+	let user = req.session.user
+
+	res.render('settings', {user: user})
+});
 
 //GET SIGN IN PAGE
 app.get('/login', function(req, res) {

@@ -6,42 +6,47 @@
     <title>Signup</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/profile.css">
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #3B5998;">
   <div class="container">
-  <a class="navbar-brand" href="/" style="color: #fff">faceblog</a>
-  <div class="collapse navbar-collapse" id="navbarText">
-  <div class="navbar-nav ml-auto">
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-      <button class="btn btn-light btn-margin-right rounded my-2 my-sm-0" type="button" id="relocate_signup">Register</button>
-      <button class="btn btn-light rounded my-2 my-sm-0" href="/login" type="button" id="relocate_login">Sign in</button>
+    <a class="navbar-brand" href="/" style="color: #fff">faceblog</a>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <div class="navbar-nav ml-auto">
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+          <a class="nav-item nav-link active" href="/profile">Profile <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="/logout">Logout</a>
+        </div>
+      </div>
     </div>
-</div>
-
- <!--    <span class="navbar-text">
-      <a href="#">Register</a>
-    </span>
-    <button class="ml-auto btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button> -->
   </div>
-</div>
 </nav>
 
-<a href="/login">Sign in</a> <a href="/signup">Signup</a> <a href="/profile">Profile</a> <a href="/createpost">Create Post</a> <a href="/posts">Posts</a> <a href="/allposts">All posts</a>
+<div class="container">
+  <div class="row">
+    <div class="col-8 pt-5">
+    <h1>Welcome back <%= user.firstname %>! </h1>
 
-  <h1>Welcome to your profile page </h1>
+    <p>Did you know that one of our recent surveys demonstrated that most of our users want to have a social platform that doesn't track their users?</p>
+    <p>Well, this is your lucky day!</p>
+    <p><strong>Faceblog</strong> is a social platform on which you can share your thoughts or interesting topics by <a href="/createpost">creating a post</a>. Keep track of your <a href="/posts">own posts</a> and posts of <a href="/allposts">other users</a>. Read, think, share and smile! Please be polite to other users when commenting on other users because we're soft as kittens and don't allow buzzy and fuzzy posts/comments on our platform.</p>
+  </div>
+    <div class="col-4">
+      <div class="list-group pt-5">
+        <a href="/settings" class="list-group-item list-group-item-action list-group-item-light">Account settings</a>
+        <a href="/createpost" class="list-group-item list-group-item-action list-group-item-light">Create a new post</a>
+        <a href="/posts" class="list-group-item list-group-item-action list-group-item-light">View your posts</a>
+        <a href="/allposts" class="list-group-item list-group-item-action list-group-item-light">View other user's posts</a>
+      </div>
+    </div>
+</div>
+</div>
 
-  	<p>Name: <%= user.email %> </p>
-  	<p>Password: <%= user.password %> </p>
-
-<ul>
-  <li><a href="/createpost">Click here to create a new post</a></li>
-   <li><a href="/posts">View a list of your own posts</a></li>
-   <li><a href="/allposts">View a list of everyone's posts</a></li>
-   <li><a href="/logout">Click here to log out</a></li>
- </ul>
-
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/jquery.js"></script>
 </body>
 </html>
