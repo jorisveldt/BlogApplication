@@ -5,20 +5,61 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Signup</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script> -->
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/register.css">
 </head>
 <body>
 
-<a href="login">Sign in</a> <a href="signup">Signup</a> <a href="profile">Profile</a> <a href="createpost">Create Post</a> <a href="posts">Posts</a> <a href="allposts">All posts</a>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #3B5998;">
+    <div class="container">
+  <a class="navbar-brand" href="/" style="color: #fff">faceblog</a>
+  <div class="collapse navbar-collapse" id="navbarText">
+  <div class="navbar-nav ml-auto">
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+      <button class="btn btn-light btn-margin-right rounded my-2 my-sm-0" type="button" id="relocate_signup">Register</button>
+      <button class="btn btn-light rounded my-2 my-sm-0" href="/login" type="button" id="relocate_login">Sign in</button>
+    </div>
+</div>
+</div>
+</div>
+</nav>
 
-<form method="POST" action="/signup">
-	Firstname: <br><input type="text" name="firstname"><br>
-	Lastname: <br><input type="text" name="lastname"><br>
-	Email: <br><input type="text" name="email"><br>
-	Password: <br><input type="text" name="password"><br>
-	<input type="submit" placeholder="submit">
-</form>
 
+<div class="container">
+    <div class="row">
+        <div class="col pt-5">
+          <img src="/img/faceblog-register.png" class="img-fluid">
+        </div>
+        <div class="col pt-5">
+            <form method="POST" action="/signup">
+                <div class="form-row">
+                    <h1 class="h3 mb-3 font-weight-normal" style="text-align: left;">Register a new account</h1>
+                    <p class="font-weight-normal" style="text-align: left;">Creating an account on faceblog is <strong>free</strong> and always will be.</p>
+                </div>
+                <div class="form-row">
+                    <div class="col pl-0 pr-2">
+                        <input type="text" class="form-control" placeholder="Firstname" name="firstname">
+                    </div>
+                    <div class="col pl-2 pr-0">
+                        <input type="text" class="form-control" placeholder="Lastname" name="lastname">
+                    </div>
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <input type="email" class="form-control" name="email" placeholder="Email address" required>
+                    <label for="inputPassword" class="sr-only">Email address</label>
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                    <p class="font-weight-normal pt-2 pb-2" style="text-align: left;">By clicking Register, you agree to our Terms. Learn how we collect, use and share your data in our Data Policy and many credits to <a href="https://freepik.com" target="_blank">freepik.com</a>.</p>
+                    <button class="btn btn-lg btn-primary btn-block btn-outline-none" type="submit" style="background-color: #228B22; border-color: #228B22;">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/jquery.js"></script>
 </body>
 </html>
