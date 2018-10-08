@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
 
 const sequelize = new Sequelize('blogapp', 'Joris', null, {
 	host: 'localhost',
@@ -79,19 +80,18 @@ app.post('/signup', function(req, res) {
 	}
 
 //Data validation: check whether email already exists
-
-	User.findOne({
-		where:
-			{email: email}
-	})
-	.then((user) => {
-		if (email !== user.email) {
-			req.session.user = user;
-			res.redirect('/signup');
-		} else {
-			res.redirect('/signup?message=' + encodeURIComponent("Email already exists"));
-		}
-	})
+	// User.findOne({
+	// 	where:
+	// 		{email: email}
+	// })
+	// .then((user) => {
+	// 	console.log('test');
+	// 	console.log(user.email);
+	// 	if (user !== null && user.email === email) {
+	// 		res.redirect('/?message=' + encodeURIComponent("Email already exists"));
+	// 		return;
+	// 	}
+	// })
 
 	if(password.length < 8 || passwordconfirm < 8) {
 		res.redirect('/?message=' + encodeURIComponent("Please fill out your password."));
@@ -102,7 +102,6 @@ app.post('/signup', function(req, res) {
 		res.redirect('/?message=' + encodeURIComponent("Your password does not match"));
 		return;
 	}
-
 
 	User.create({
 		firstname: firstname,
@@ -157,7 +156,6 @@ app.post('/login', function(req, res) {
 		res.redirect('/?message=' + encodeURIComponent("Please fill out your password."));
 		return;
 	}
-	
 
 	User.findOne({
 		where: {
