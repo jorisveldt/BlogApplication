@@ -12,7 +12,8 @@ const User = sequelize.define('users', {
 	firstname: Sequelize.STRING,
 	lastname: Sequelize.STRING,
 	email: Sequelize.STRING,
-	password: Sequelize.STRING
+	password: Sequelize.STRING,
+	passwordconfirm: Sequelize.STRING
 });
 
 const Post = sequelize.define('posts', { 
@@ -55,12 +56,62 @@ app.get('/signup', function(req, res) {
 
 //CREATE NEW USER
 app.post('/signup', function(req, res) {
-	User.create({
-		firstname: req.body.firstname,
-		lastname: req.body.lastname,
-		email: req.body.email,
-		password: req.body.password
+	
+	let firstname = req.body.firstname
+	let lastname = req.body.lastname
+	let email = req.body.email.toLowerCase()
+	let password = req.body.password
+	let passwordconfirm = req.body.passwordconfirm
+
+	if(firstname.length === 0) {
+		res.redirect('/?message=' + encodeURIComponent("Please fill out your firstname."));
+		return;
+	}
+
+	if(lastname.length === 0) {
+		res.redirect('/?message=' + encodeURIComponent("Please fill out your lastname."));
+		return;
+	}
+
+	if(email.length === 0) {
+		res.redirect('/?message=' + encodeURIComponent("Please fill out your email."));
+		return;
+	}
+
+//Data validation: check whether email already exists
+
+	User.findOne({
+		where:
+			{email: email}
 	})
+	.then((user) => {
+		if (email !== user.email) {
+			req.session.user = user;
+			res.redirect('/signup');
+		} else {
+			res.redirect('/signup?message=' + encodeURIComponent("Email already exists"));
+		}
+	})
+
+	if(password.length < 8 || passwordconfirm < 8) {
+		res.redirect('/?message=' + encodeURIComponent("Please fill out your password."));
+		return;
+	}
+
+	if(password !== passwordconfirm) {
+		res.redirect('/?message=' + encodeURIComponent("Your password does not match"));
+		return;
+	}
+
+
+	User.create({
+		firstname: firstname,
+		lastname: lastname,
+		email: email,
+		password: password,
+		passwordconfirm: passwordconfirm
+	})
+
 	.then((user) => {
 		req.session.user = user; //creates a session when the user is logged in and remembers it
 		res.redirect('/profile');
