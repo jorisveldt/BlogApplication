@@ -3,6 +3,9 @@ const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
+const someOtherPlaintextPassword = 'not_bacon';
 
 const sequelize = new Sequelize('blogapp', 'Joris', null, {
 	host: 'localhost',
@@ -45,6 +48,7 @@ app.use(session({
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+
 //GET HOME PAGE
 app.get('/', function(req, res) {
   res.render('signup')
@@ -57,7 +61,7 @@ app.get('/signup', function(req, res) {
 
 //CREATE NEW USER
 app.post('/signup', function(req, res) {
-	
+
 	let firstname = req.body.firstname
 	let lastname = req.body.lastname
 	let email = req.body.email.toLowerCase()
@@ -103,17 +107,18 @@ app.post('/signup', function(req, res) {
 		return;
 	}
 
-	User.create({
-		firstname: firstname,
-		lastname: lastname,
-		email: email,
-		password: password,
-		passwordconfirm: passwordconfirm
-	})
-
-	.then((user) => {
-		req.session.user = user; //creates a session when the user is logged in and remembers it
-		res.redirect('/profile');
+	bcrypt.hash(password, saltRounds).then((hash) => {
+    	User.create({
+			firstname: firstname,
+			lastname: lastname,
+			email: email,
+			password: hash,
+			passwordconfirm: hash
+		})
+    	.then((user) => {
+			req.session.user = user; //creates a session when the user is logged in and remembers it
+			res.redirect('/profile');
+		})
 	})
 })
 
@@ -163,12 +168,17 @@ app.post('/login', function(req, res) {
 		}
 	})
 	.then(function (user) {
-		if (user !== null && password === user.password) {
+		bcrypt.compare(password, user.password).then((result) => {
+		if (user !== null && result) {
 			req.session.user = user;
 			res.redirect('/profile');
 		} else {
 			res.redirect('/login?message=' + encodeURIComponent("Invalid email or password."));
 		}
+		})
+		.catch(error => {
+			console.log(error)
+		})
 	})
 })
 
