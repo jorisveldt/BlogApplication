@@ -48,7 +48,8 @@ body {
 }
 
 .footer-bottom {
-    position: fixed;
+    position: absolute;
+    padding-top: 10px;
     bottom: 0;
     width: 100%;
     text-align: center;
