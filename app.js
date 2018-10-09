@@ -2,6 +2,9 @@ const Sequelize = require('sequelize');
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+let bcrypt = require('bcrypt');
+
+const saltRounds = 10;
 
 const sequelize = new Sequelize('blogapp', 'Joris', null, {
 	host: 'localhost',
@@ -80,18 +83,18 @@ app.post('/signup', function(req, res) {
 
 //Data validation: check whether email already exists
 
-	User.findOne({
-		where:
-			{email: email}
-	})
-	.then((user) => {
-		if (email !== user.email) {
-			req.session.user = user;
-			res.redirect('/signup');
-		} else {
-			res.redirect('/signup?message=' + encodeURIComponent("Email already exists"));
-		}
-	})
+	// User.findOne({
+	// 	where:
+	// 		{email: email}
+	// })
+	// .then((user) => {
+	// 	if (email !== user.email) {
+	// 		req.session.user = user;
+	// 		res.redirect('/signup');
+	// 	} else {
+	// 		res.redirect('/signup?message=' + encodeURIComponent("Email already exists"));
+	// 	}
+	// })
 
 	if(password.length < 8 || passwordconfirm < 8) {
 		res.redirect('/?message=' + encodeURIComponent("Please fill out your password."));
@@ -275,7 +278,7 @@ app.get('/logout', function (request, response) {
 	})
 });
 
-sequelize.sync({force: true})
+sequelize.sync()
 
 app.listen(3000, function(req, res){
 	console.log('Port is listening on 3000')
