@@ -104,17 +104,18 @@ app.post('/signup', function(req, res) {
 	}
 
 
-	User.create({
-		firstname: firstname,
-		lastname: lastname,
-		email: email,
-		password: password,
-		passwordconfirm: passwordconfirm
-	})
-
-	.then((user) => {
-		req.session.user = user; //creates a session when the user is logged in and remembers it
-		res.redirect('/profile');
+	bcrypt.hash(password, saltRounds).then((hash) => {
+    	User.create({
+			firstname: firstname,
+			lastname: lastname,
+			email: email,
+			password: hash,
+			passwordconfirm: hash
+		})
+    	.then((user) => {
+			req.session.user = user; //creates a session when the user is logged in and remembers it
+			res.redirect('/profile');
+		})
 	})
 })
 
@@ -165,12 +166,17 @@ app.post('/login', function(req, res) {
 		}
 	})
 	.then(function (user) {
-		if (user !== null && password === user.password) {
+		bcrypt.compare(password, user.password).then((result) => {
+		if (user !== null && result) {
 			req.session.user = user;
 			res.redirect('/profile');
 		} else {
 			res.redirect('/login?message=' + encodeURIComponent("Invalid email or password."));
 		}
+		})
+		.catch(error => {
+			console.log(error)
+		})
 	})
 })
 
@@ -269,7 +275,7 @@ app.get('/logout', function (request, response) {
 	})
 });
 
-sequelize.sync()
+sequelize.sync({force: true})
 
 app.listen(3000, function(req, res){
 	console.log('Port is listening on 3000')
