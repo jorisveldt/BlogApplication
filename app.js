@@ -106,7 +106,6 @@ app.post('/signup', function(req, res) {
 		return;
 	}
 
-
 	bcrypt.hash(password, saltRounds).then((hash) => {
     	User.create({
 			firstname: firstname,
@@ -162,7 +161,6 @@ app.post('/login', function(req, res) {
 		return;
 	}
 	
-
 	User.findOne({
 		where: {
 			email: email
