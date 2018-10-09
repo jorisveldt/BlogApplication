@@ -89,10 +89,9 @@ app.post('/signup', function(req, res) {
 	// })
 	// .then((user) => {
 	// 	if (email !== user.email) {
-	// 		req.session.user = user;
 	// 		res.redirect('/signup');
-	// 	} else {
-	// 		res.redirect('/signup?message=' + encodeURIComponent("Email already exists"));
+		// } else {
+		// 	res.redirect('/signup?message=' + encodeURIComponent("Email already exists"));
 	// 	}
 	// })
 
@@ -106,18 +105,28 @@ app.post('/signup', function(req, res) {
 		return;
 	}
 
-	bcrypt.hash(password, saltRounds).then((hash) => {
-    	User.create({
-			firstname: firstname,
-			lastname: lastname,
-			email: email,
-			password: hash,
-			passwordconfirm: hash
-		})
-    	.then((user) => {
-			req.session.user = user; //creates a session when the user is logged in and remembers it
-			res.redirect('/profile');
-		})
+	User.findOne({
+		where:
+			{email: email}
+	})
+	.then((result) => {
+		if(result === null) {
+			bcrypt.hash(password, saltRounds).then((hash) => {
+		    	User.create({
+					firstname: firstname,
+					lastname: lastname,
+					email: email,
+					password: hash,
+					passwordconfirm: hash
+				})
+		    	.then((user) => {
+					req.session.user = user; //creates a session when the user is logged in and remembers it
+					res.redirect('/profile');
+				})
+			})
+		} else {
+			res.redirect('/signup?message=' + encodeURIComponent("Email already exists"));
+		}
 	})
 })
 
