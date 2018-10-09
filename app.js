@@ -41,7 +41,7 @@ app.use(express.static('public'));
 app.use(session({
 	secret: 'dancing kitties on the table',
 	resave: false,
-	saveUninitialized: false
+	saveUninitialized: true
 }))
 
 app.set('view engine', 'ejs');
@@ -80,20 +80,6 @@ app.post('/signup', function(req, res) {
 		res.redirect('/?message=' + encodeURIComponent("Please fill out your email."));
 		return;
 	}
-
-//Data validation: check whether email already exists
-
-	// User.findOne({
-	// 	where:
-	// 		{email: email}
-	// })
-	// .then((user) => {
-	// 	if (email !== user.email) {
-	// 		res.redirect('/signup');
-		// } else {
-		// 	res.redirect('/signup?message=' + encodeURIComponent("Email already exists"));
-	// 	}
-	// })
 
 	if(password.length < 8 || passwordconfirm < 8) {
 		res.redirect('/?message=' + encodeURIComponent("Please fill out your password."));
@@ -209,7 +195,9 @@ app.post('/createpost', function(req, res) {
 		body: req.body.body,
 		userId: req.session.user.id
 	})
-	res.redirect('/posts')
+	.then(() => {
+		res.redirect('/posts')
+	})
 })
 
 //GET OWN POSTS
