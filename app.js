@@ -21,11 +21,11 @@ const User = sequelize.define('users', {
 
 const Post = sequelize.define('posts', { 
 	title: Sequelize.STRING, 
-	body: Sequelize.STRING
+	body: Sequelize.TEXT
 });
 
 const Comment = sequelize.define('comments', {
-	comment: Sequelize.STRING
+	comment: Sequelize.TEXT
 })
 
 Post.belongsTo(User);
@@ -260,7 +260,7 @@ app.post('/allposts/:id', function (req, res) {
 			res.redirect(`/allposts/${req.params.id}`)
 	})
 		.catch(error => {
-    		console.log('Error', err.stack)
+			console.log(error)
   })
 });		
 

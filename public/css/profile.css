@@ -63,3 +63,28 @@ body {
     width: 100%;
     text-align: center;
 }
+
+.comment-style {
+  color: #666;
+  border: 1px solid gray;
+  margin: 3px;
+  padding: 5px;
+  background-color: #E2E2E2;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  background: #fff;
+  height: 40px;
+  line-height: 40px;
+  color: #666;
+}
+
+li:nth-child(2n){
+  background: #f7f7f7;
+}
