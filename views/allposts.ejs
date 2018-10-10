@@ -25,7 +25,26 @@
 </nav>
 
 <div class="container">
-	<h1 class="pt-3">Message board</h1>
+
+<h1 class="pt-3 pb-3">Messages of other users</h1>
+
+	<div class="row">
+    <% for(let i = posts.length - 1; i >= 0; i--) { %>
+    <div class="col pb-3">
+      <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="/img/coolcat.jpg" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title"><%= posts[i].title %></h5>
+        <p class="card-text"><%= posts[i].body.slice(0,35) + "..." %></p>
+        <a class="btn btn-primary" href="/allposts/<%= posts[i].id%>">Read More</a>
+      </div>
+    </div>
+    </div>
+    <% } %>
+  </div>
+</div>
+
+<!-- 	<h1 class="pt-3">Message board</h1>
 	<% for(let i = 0; i < posts.length; i++) { %>
 	<div class="pt-5">	
 		<div class="card text-center">
@@ -42,7 +61,7 @@
 		</div>
 	</div>
 	<% } %>
-</div>
+</div> -->
 
 <!-- <div class="pt-5">
 <div class="card text-center">
